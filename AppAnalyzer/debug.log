@@ -1,0 +1,16 @@
+[0609/161736.311:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0609/161736.330:ERROR:exception_snapshot_win.cc(98)] thread ID 2144 not found in process
+[0609/175426.636:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0609/175426.746:ERROR:exception_snapshot_win.cc(98)] thread ID 7056 not found in process
+[0609/175428.346:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0609/175428.347:ERROR:exception_snapshot_win.cc(98)] thread ID 12456 not found in process
+[0609/180117.673:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0609/180117.717:ERROR:exception_snapshot_win.cc(98)] thread ID 13704 not found in process
+[0610/012644.236:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0610/012644.441:ERROR:exception_snapshot_win.cc(98)] thread ID 7592 not found in process
+[0610/013416.712:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0610/013416.750:ERROR:exception_snapshot_win.cc(98)] thread ID 12156 not found in process
+[0610/014358.177:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0610/014358.204:ERROR:exception_snapshot_win.cc(98)] thread ID 8064 not found in process
+[0610/090650.251:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0610/090650.367:ERROR:exception_snapshot_win.cc(98)] thread ID 15148 not found in process
