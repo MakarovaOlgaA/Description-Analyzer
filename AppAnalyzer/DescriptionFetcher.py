@@ -16,6 +16,7 @@ class DescriptionFetcher(object):
     def __init__(self):
         options = webdriver.ChromeOptions()
         options.add_argument('lang=en')
+        options.add_argument('--headless')
 
         driverPath = os.path.join(os.getcwd(), 'chromedriver')
         self.driver = webdriver.Chrome(options=options, executable_path=driverPath)        
