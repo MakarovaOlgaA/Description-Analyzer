@@ -14,14 +14,16 @@ class DescriptionFetcher(object):
     apps = []
 
     def __init__(self):
-        options = webdriver.ChromeOptions()
-        options.add_argument('lang=en')
-        options.add_argument('--headless')
+        self.options = webdriver.ChromeOptions()
+        self.options.add_argument('lang=en')
+       # self.options.add_argument('--headless')
 
-        driverPath = os.path.join(os.getcwd(), 'chromedriver')
-        self.driver = webdriver.Chrome(options=options, executable_path=driverPath)        
+        self.driverPath = os.path.join(os.getcwd(), 'chromedriver')
 
     def search(self, searchString):
+        if self.driver is None:
+            self.driver = webdriver.Chrome(options=self.options, executable_path=self.driverPath)        
+
         url = self.linkPattern.format(urlparser.quote_plus(searchString))
         self.driver.get(url)
 

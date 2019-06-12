@@ -141,7 +141,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.label_6 = QtWidgets.QLabel(self.tab_2)
-        self.label_6.setGeometry(QtCore.QRect(20, 470, 161, 21))
+        self.label_6.setGeometry(QtCore.QRect(30, 580, 161, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -150,37 +150,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_6.setObjectName("label_6")
         self.originalTextEdit_2 = QtWidgets.QTextEdit(self.tab_2)
         self.originalTextEdit_2.setEnabled(True)
-        self.originalTextEdit_2.setGeometry(QtCore.QRect(20, 110, 811, 171))
+        self.originalTextEdit_2.setGeometry(QtCore.QRect(20, 40, 811, 171))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.originalTextEdit_2.setFont(font)
-        self.originalTextEdit_2.setReadOnly(True)
+        self.originalTextEdit_2.setReadOnly(False)
         self.originalTextEdit_2.setObjectName("originalTextEdit_2")
-        self.label_7 = QtWidgets.QLabel(self.tab_2)
-        self.label_7.setGeometry(QtCore.QRect(20, 10, 161, 21))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_7.setFont(font)
-        self.label_7.setObjectName("label_7")
         self.stemmedTextEdit_2 = QtWidgets.QTextEdit(self.tab_2)
         self.stemmedTextEdit_2.setEnabled(True)
-        self.stemmedTextEdit_2.setGeometry(QtCore.QRect(20, 320, 811, 131))
+        self.stemmedTextEdit_2.setGeometry(QtCore.QRect(20, 250, 811, 111))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.stemmedTextEdit_2.setFont(font)
         self.stemmedTextEdit_2.setReadOnly(True)
         self.stemmedTextEdit_2.setObjectName("stemmedTextEdit_2")
-        self.nameLineEdit_2 = QtWidgets.QLineEdit(self.tab_2)
-        self.nameLineEdit_2.setGeometry(QtCore.QRect(20, 40, 811, 31))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.nameLineEdit_2.setFont(font)
-        self.nameLineEdit_2.setReadOnly(True)
-        self.nameLineEdit_2.setObjectName("nameLineEdit_2")
         self.label_8 = QtWidgets.QLabel(self.tab_2)
-        self.label_8.setGeometry(QtCore.QRect(20, 80, 161, 21))
+        self.label_8.setGeometry(QtCore.QRect(20, 10, 161, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -188,13 +173,40 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_8.setFont(font)
         self.label_8.setObjectName("label_8")
         self.label_9 = QtWidgets.QLabel(self.tab_2)
-        self.label_9.setGeometry(QtCore.QRect(20, 290, 161, 21))
+        self.label_9.setGeometry(QtCore.QRect(20, 220, 161, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.label_9.setFont(font)
         self.label_9.setObjectName("label_9")
+        self.stemmedTextEdit_3 = QtWidgets.QTextEdit(self.tab_2)
+        self.stemmedTextEdit_3.setEnabled(True)
+        self.stemmedTextEdit_3.setGeometry(QtCore.QRect(20, 410, 811, 131))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.stemmedTextEdit_3.setFont(font)
+        self.stemmedTextEdit_3.setReadOnly(True)
+        self.stemmedTextEdit_3.setObjectName("stemmedTextEdit_3")
+        self.analyzePushButton = QtWidgets.QPushButton(self.tab_2)
+        self.analyzePushButton.setGeometry(QtCore.QRect(710, 570, 121, 41))
+        self.analyzePushButton.setObjectName("analyzePushButton")
+        self.label_10 = QtWidgets.QLabel(self.tab_2)
+        self.label_10.setGeometry(QtCore.QRect(20, 380, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.statusLabel = QtWidgets.QLabel(self.tab_2)
+        self.statusLabel.setGeometry(QtCore.QRect(190, 580, 301, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.statusLabel.setFont(font)
+        self.statusLabel.setObjectName("statusLabel")
         self.tabWidget.addTab(self.tab_2, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -202,12 +214,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "App Analyzer"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.dbRadioButton.setText(_translate("MainWindow", "Search in Database"))
         self.label_5.setText(_translate("MainWindow", "Name:"))
         self.webRadioButton.setText(_translate("MainWindow", "Search on Google Play"))
@@ -226,9 +238,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.appCounterLabel.setText(_translate("MainWindow", "App 0 of 0"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Manual Classification"))
         self.label_6.setText(_translate("MainWindow", "Advertizement status:"))
-        self.label_7.setText(_translate("MainWindow", "Name:"))
         self.label_8.setText(_translate("MainWindow", "Description:"))
         self.label_9.setText(_translate("MainWindow", "Stemmed description:"))
+        self.analyzePushButton.setText(_translate("MainWindow", "Analyze"))
+        self.label_10.setText(_translate("MainWindow", "Vocabulary:"))
+        self.statusLabel.setText(_translate("MainWindow", "_"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Automatic Prediction"))
 
 class EventHandling_MainWindow:
@@ -244,6 +258,7 @@ class EventHandling_MainWindow:
         self.mainWindow.nextCommandLinkButton.clicked.connect(self.next)
         self.mainWindow.prevCommandLinkButton.clicked.connect(self.prev)
         self.mainWindow.savePushButton.clicked.connect(self.save)
+        self.mainWindow.analyzePushButton.clicked.connect(self.onAnalyzeClick)
 
     def onGoClick(self):
         self.mainWindow.nameLineEdit.setText('')
@@ -265,7 +280,7 @@ class EventHandling_MainWindow:
        
     def updateAppInfo(self, app):                
         if app.stemmedDescription is None:
-            app.stemmedDescription = ' '.join(self.stem(app.description))
+            app.stemmedDescription = self.stem(app.description)
 
         comboboxIndex = [key for key, value in self.adStatuses.items() if value == app.isAdvertizerFriendly][0]
         self.mainWindow.adStatusComboBox.setCurrentIndex(comboboxIndex)
@@ -291,5 +306,15 @@ class EventHandling_MainWindow:
         self.currentApp.isAdvertizerFriendly = adStatus
         self.repo.updateOrInsert(self.currentApp)
 
+    def onAnalyzeClick(self):
+        textToAnalyze = self.mainWindow.originalTextEdit_2.toPlainText()
+        result = self.analyze(textToAnalyze)
+        self.mainWindow.statusLabel.setText(result.prediction)
+        self.mainWindow.stemmedTextEdit_2.setPlainText(result.processedContent)
+        self.mainWindow.stemmedTextEdit_3.setPlainText("\n".join(result.vocabulary))
+
     def stem(self, textToAnalyze):
+        pass
+
+    def analyze(self, textToAnalyze):
         pass

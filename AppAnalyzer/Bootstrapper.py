@@ -16,10 +16,12 @@ if __name__ == '__main__':
 
     handler = EventHandling_MainWindow(window)
 
-    textProcessor = TextProcessor()
-    handler.stem = textProcessor.tokenizeText
-
     repo = Repository()
+
+    textProcessor = TextProcessor(repo)
+    handler.stem = textProcessor.preProcess
+    handler.analyze = textProcessor.analyze
+
     fetcher = DescriptionFetcher()
     handler.webSearcher = WebSearcher(fetcher, repo)
     handler.dbSearcher = DbSearcher(repo)
