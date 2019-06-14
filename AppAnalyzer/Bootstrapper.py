@@ -21,6 +21,7 @@ if __name__ == '__main__':
     textProcessor = TextProcessor(repo)
     handler.stem = textProcessor.preProcess
     handler.analyze = textProcessor.analyze
+    handler.calculateMetrics = textProcessor.getMetrics
 
     fetcher = DescriptionFetcher()
     handler.webSearcher = WebSearcher(fetcher, repo)
