@@ -22,6 +22,8 @@ if __name__ == '__main__':
     handler.stem = textProcessor.preProcess
     handler.analyze = textProcessor.analyze
     handler.calculateMetrics = textProcessor.getMetrics
+    handler.drawRocCurve = textProcessor.buildRocCurve
+    handler.drawCompressionChart = textProcessor.buildCompressionChart
 
     fetcher = DescriptionFetcher()
     handler.webSearcher = WebSearcher(fetcher, repo)

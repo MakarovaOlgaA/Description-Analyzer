@@ -1,5 +1,8 @@
-import re
-from PyQt5 import QtCore, QtGui, QtWidgets
+import re, sys
+from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtWidgets import QApplication, QAction, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QSpacerItem, QSizePolicy, QPushButton
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
@@ -254,7 +257,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.analyzePushButton_2.setGeometry(QtCore.QRect(550, 80, 121, 41))
         self.analyzePushButton_2.setObjectName("analyzePushButton_2")
         self.label_11 = QtWidgets.QLabel(self.tab_3)
-        self.label_11.setGeometry(QtCore.QRect(60, 30, 201, 21))
+        self.label_11.setGeometry(QtCore.QRect(150, 30, 111, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -325,10 +328,43 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.MetricLabel_4.setFont(font)
         self.MetricLabel_4.setAlignment(QtCore.Qt.AlignCenter)
         self.MetricLabel_4.setObjectName("MetricLabel_4")
+        self.label_15 = QtWidgets.QLabel(self.tab_3)
+        self.label_15.setGeometry(QtCore.QRect(200, 190, 61, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_15.setFont(font)
+        self.label_15.setObjectName("label_15")
+        self.MetricLabel_5 = QtWidgets.QLabel(self.tab_3)
+        self.MetricLabel_5.setGeometry(QtCore.QRect(280, 190, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setUnderline(False)
+        font.setWeight(50)
+        self.MetricLabel_5.setFont(font)
+        self.MetricLabel_5.setAlignment(QtCore.Qt.AlignCenter)
+        self.MetricLabel_5.setObjectName("MetricLabel_5")
         self.tabWidget.addTab(self.tab_3, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
+        self.analyzePushButton_3 = QtWidgets.QPushButton(self.tab_4)
+        self.analyzePushButton_3.setGeometry(QtCore.QRect(370, 470, 121, 41))
+        self.analyzePushButton_3.setObjectName("analyzePushButton_3")
+        self.widget = QtWidgets.QWidget(self.tab_4)
+        self.widget.setGeometry(QtCore.QRect(20, 10, 831, 441))
+        self.widget.setObjectName("widget")
         self.tabWidget.addTab(self.tab_4, "")
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.analyzePushButton_4 = QtWidgets.QPushButton(self.tab_5)
+        self.analyzePushButton_4.setGeometry(QtCore.QRect(370, 470, 121, 41))
+        self.analyzePushButton_4.setObjectName("analyzePushButton_4")
+        self.widget_2 = QtWidgets.QWidget(self.tab_5)
+        self.widget_2.setGeometry(QtCore.QRect(20, 10, 831, 441))
+        self.widget_2.setObjectName("widget_2")
+        self.tabWidget.addTab(self.tab_5, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -340,7 +376,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "App Analyzer"))
         self.dbRadioButton.setText(_translate("MainWindow", "Search in Database"))
         self.label_5.setText(_translate("MainWindow", "Name"))
         self.webRadioButton.setText(_translate("MainWindow", "Search on Google Play"))
@@ -370,7 +406,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.originalWordCounterLabel_4.setText(_translate("MainWindow", "(words: 0, characters: 0)"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Automatic Prediction"))
         self.analyzePushButton_2.setText(_translate("MainWindow", "Calculate"))
-        self.label_11.setText(_translate("MainWindow", "Accuracy classification score:"))
+        self.label_11.setText(_translate("MainWindow", "Accuracy score:"))
         self.label_12.setText(_translate("MainWindow", "Recall score:"))
         self.label_13.setText(_translate("MainWindow", "ROC AUC score:"))
         self.label_14.setText(_translate("MainWindow", "Average precision:"))
@@ -378,8 +414,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.MetricLabel_2.setText(_translate("MainWindow", "-"))
         self.MetricLabel_3.setText(_translate("MainWindow", "-"))
         self.MetricLabel_4.setText(_translate("MainWindow", "-"))
+        self.label_15.setText(_translate("MainWindow", "F-score:"))
+        self.MetricLabel_5.setText(_translate("MainWindow", "-"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Classification Metrics "))
+        self.analyzePushButton_3.setText(_translate("MainWindow", "Buid"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Сompression Сhart"))
+        self.analyzePushButton_4.setText(_translate("MainWindow", "Buid"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "ROC-curve"))
 
 class EventHandling_MainWindow:
     adStatuses = {
@@ -396,6 +437,8 @@ class EventHandling_MainWindow:
         self.mainWindow.savePushButton.clicked.connect(self.save)
         self.mainWindow.analyzePushButton.clicked.connect(self.onAnalyzeClick)
         self.mainWindow.analyzePushButton_2.clicked.connect(self.onCalculateMetricsClick)
+        self.mainWindow.analyzePushButton_4.clicked.connect(self.onDrawRocCurveClick)
+        self.mainWindow.analyzePushButton_3.clicked.connect(self.onDrawCompressionChartClick)
 
     def onGoClick(self):
         self.mainWindow.nameLineEdit.setText('')
@@ -468,12 +511,21 @@ class EventHandling_MainWindow:
         self.mainWindow.MetricLabel_2.setText('{:{width}.{prec}f}%'.format(metrics.recall * 100.0, width=5, prec=2))
         self.mainWindow.MetricLabel_3.setText('{:{width}.{prec}f}%'.format(metrics.roc_auc * 100.0, width=5, prec=2))
         self.mainWindow.MetricLabel_4.setText('{:{width}.{prec}f}%'.format(metrics.precision * 100.0, width=5, prec=2))
+        self.mainWindow.MetricLabel_5.setText('{:{width}.{prec}f}%'.format(metrics.f1 * 100.0, width=5, prec=2))
+
+    def onDrawRocCurveClick(self):
+        self.drawRocCurve()
+
+    def onDrawCompressionChartClick(self):
+        self.drawCompressionChart()
 
     def calculateMetrics(self):
         pass
-
     def stem(self, textToAnalyze):
         pass
-
     def analyze(self, textToAnalyze):
+        pass
+    def drawRocCurve(self):
+        pass
+    def drawCompressionChart(self):
         pass

@@ -5,10 +5,12 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer, TfidfTransformer
 from sklearn.model_selection import train_test_split
 import pandas as pd
-from sklearn.metrics import accuracy_score, recall_score, roc_auc_score, average_precision_score
+from sklearn.metrics import accuracy_score, recall_score, roc_auc_score, average_precision_score, f1_score, roc_curve, confusion_matrix
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import model_selection
 import numpy as np
+import matplotlib.pyplot as plt
+import itertools
 
 class TextProcessor(object):
     def __init__(self, repo):
@@ -78,8 +80,6 @@ class TextProcessor(object):
         testData = self.tfIdf.transform(testDocumentDf['content'])
 
         prediction = naive.predict_proba(testData)
-        #print("Naive Bayes Accuracy Score -> ",accuracy_score(prediction, testString)*100)
-        #return self.encoder.inverse_transform(prediction)[0]
         return prediction
 
     def get_scores(self, vectorizer, vectors):
@@ -114,8 +114,88 @@ class TextProcessor(object):
         recall = recall_score(predictions_NB, Test_Y)
         roc_auc = roc_auc_score(predictions_NB, Test_Y)
         precision = average_precision_score(predictions_NB, Test_Y)
+        f1 = f1_score(predictions_NB, Test_Y)
 
-        return Metrics(acuracy, recall, roc_auc, precision)
+        return Metrics(acuracy, recall, roc_auc, precision, f1)
+
+    def buildRocCurve(self):
+        self.loadAllDocumets()
+
+        self.encoder = LabelEncoder()
+        self.documentsDf['label'] = self.encoder.fit_transform(self.documentsDf['label'])
+
+        Train_X, Test_X, Train_Y, Test_Y = model_selection.train_test_split(self.documentsDf['content'],self.documentsDf['label'],test_size=0.3)
+
+        Tfidf_vect = TfidfVectorizer(max_features=5000)
+        Tfidf_vect.fit(self.documentsDf['content'])
+        Train_X_Tfidf = Tfidf_vect.transform(Train_X)
+        Test_X_Tfidf = Tfidf_vect.transform(Test_X)
+
+        # fit the training dataset on the NB classifier
+        Naive = MultinomialNB()
+        Naive.fit(Train_X_Tfidf,Train_Y)
+
+        # predict the labels on validation dataset
+        predictions_NB = Naive.predict(Test_X_Tfidf)
+
+        # Compute fpr, tpr, thresholds and roc auc
+        fpr, tpr, thresholds = roc_curve(predictions_NB, Test_Y)
+        roc_auc = roc_auc_score(predictions_NB, Test_Y)
+
+        # Plot ROC curve
+        plt.plot(fpr, tpr, label='ROC curve (area = %0.3f)' % roc_auc)
+        plt.plot([0, 1], [0, 1], 'k--')  # random predictions curve
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.0])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Receiver Operating Characteristic')
+        plt.legend(loc="lower right")
+        #plt.show()
+
+        labels =  [0,1]
+        cm = confusion_matrix(predictions_NB, Test_Y, labels)
+        print(cm)
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        cax = ax.matshow(cm)
+
+        for i in range(len(cm)):
+            for j in range(len(cm[0])):
+                c = cm[j,i]
+                ax.text(i, j, str(c), va='center', ha='center', bbox=dict(boxstyle='round', facecolor='white', edgecolor='0.3'))
+      
+        plt.title('Confusion matrix of the classifier')
+        fig.colorbar(cax)
+        ax.set_xticklabels([''] + ['Not suitable', 'Ad-friendly'])
+        ax.set_yticklabels([''] + ['Not suitable', 'Ad-friendly'])
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.show()
+
+
+    def buildCompressionChart(self):
+        documents = self.repo.search('', False)
+        processedDocuments = [self.preProcess(d.description) for d in documents]
+        
+        compressionResults = [None] * len(documents)
+
+        for i in range(len(documents)):
+            words1 = len(re.findall(r'\w+', documents[i].description))
+            words2 = len(re.findall(r'\w+', processedDocuments[i]))
+            compressionResults[i] = CompressionResult(words1, len(documents[i].description), words2, len(processedDocuments[i]))
+
+        plt.hist([r.wordsCompressionRate for r in compressionResults], bins=25, histtype='bar', ec='black') 
+        plt.title('Compression Rate (Words)')
+        plt.xlabel('Compression Rate, %')
+        plt.ylabel('Number of Documents')
+
+        fig = plt.figure()
+        plt.hist([r.charsCompressionRate for r in compressionResults], bins=25, histtype='bar', ec='black') 
+        plt.title('Compression Rate (Characters)')
+        plt.xlabel('Compression Rate, %')
+        plt.ylabel('Number of Documents')
+        plt.show()
 
 class ProcessingResult:
     def __init__(self, processedContent, vocabulary, label, probalility):  
@@ -125,8 +205,18 @@ class ProcessingResult:
         self.probalility = probalility
 
 class Metrics:
-    def __init__(self, acuracy, recall, roc_auc, precision):  
+    def __init__(self, acuracy, recall, roc_auc, precision, f1):  
         self.acuracy = acuracy
         self.recall = recall
         self.roc_auc = roc_auc
         self.precision = precision
+        self.f1 = f1
+
+class CompressionResult:
+    def __init__(self, wordsOrig, charsOrig, wordsCompressed, charsCompressed):  
+        self.wordsOrig = wordsOrig
+        self.charsOrig = charsOrig
+        self.wordsCompressed = wordsCompressed
+        self.charsCompressed = charsCompressed
+        self.wordsCompressionRate = 100 * float(wordsOrig - wordsCompressed) / float(wordsOrig)
+        self.charsCompressionRate = 100 * float(charsOrig - charsCompressed) / float(charsOrig)
